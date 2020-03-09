@@ -1,0 +1,17 @@
+{
+	"name": "exjobb",
+	"version": "1.0.0",
+	"description": "rest api för mongodb och couchbase",
+	"main": "app.js",
+	"scripts": {
+		"dev": "nodemon app.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"couchbase": "^3.0.0",
+		"express": "^4.17.1",
+		"http-errors": "^1.7.3",
+		"mongoose": "^5.9.3"
+	}
+}
