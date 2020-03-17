@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>TESTAR</title>
+	</head>
+	<body>
+		<div class="ha"></div>
+		<script>
+			function fetching() {
+				let start = new Date();
+				let end;
+				const ha = document.querySelector(".ha");
+				fetch("http://192.168.1.32:3000/mongodb", {
+					method: "GET",
+					mode: "cors",
+					cache: "default",
+				})
+					.then((response) => {
+						start = new Date();
+						return response.json();
+					})
+					.then((data) => {
+						const d = JSON.stringify(data);
+						ha.innerHTML = d;
+					})
+					.then(() => {
+						end = new Date();
+
+						console.log(
+							end.getMilliseconds() - start.getMilliseconds()
+						);
+					});
+			}
+
+			fetching();
+		</script>
+	</body>
+</html>
