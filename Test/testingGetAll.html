@@ -1,10 +1,9 @@
 <body>
 	<div>
-		<button onclick="mongoGetPop()">FETCH MONGODB</button>
-		<button onclick="couchGetPop()">FETCH COUHBASE</button>
+		<button onclick="getAll('mongodb')">FETCH MONGODB</button>
+		<button onclick="getAll('couchbase')">FETCH COUHBASE</button>
 	</div>
 	<script>
-		// Population array for same test values every time.
 		function fetchingAll(uri, db) {
 			let end;
 			const div = document.querySelector("div");
@@ -37,31 +36,18 @@
 				});
 		}
 
-		const getAllLoops = 500;
-		function mongoGetPop() {
+		function getAll(database) {
+			const getAllLoops = 500;
 			for (let i = 0; i < getAllLoops; i++) {
 				setTimeout(function() {
 					fetchingPopulation(
-						"http://192.168.1.32:3000/mongodb/population/",
-						"mongodbPopulation"
+						`http://192.168.1.32:3000/${database}/population/`,
+						`${database}Population`
 					);
+					if (i === getAllLoops - 1) {
+						console.log("DONE");
+					}
 				}, 500 * i);
-				if (i === getAllLoops - 1) {
-					console.log("DONE");
-				}
-			}
-		}
-		function couchGetPop() {
-			for (let i = 0; i < getAllLoops; i++) {
-				setTimeout(function() {
-					fetchingPopulation(
-						"http://192.168.1.32:3000/couchbase/population",
-						"couchbasePopulation"
-					);
-				}, 500 * i);
-				if (i === getAllLoops - 1) {
-					console.log("DONE");
-				}
 			}
 		}
 	</script>

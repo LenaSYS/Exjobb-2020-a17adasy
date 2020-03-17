@@ -22,6 +22,7 @@ router.get("/", async (req, res) => {
 	}
 });
 
+// only for getting array for testing
 router.get("/random", async (req, res) => {
 	try {
 		const randomData = await MongoPop.aggregate([
