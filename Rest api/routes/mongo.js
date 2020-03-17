@@ -22,6 +22,20 @@ router.get("/", async (req, res) => {
 	}
 });
 
+router.get("/random", async (req, res) => {
+	try {
+		const randomData = await MongoPop.aggregate([
+			{ $sample: { size: 500 } },
+		]);
+		const years = randomData.map((d) => {
+			return d.Year;
+		});
+		res.send(years);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
 // Shows all documents with the same year as from the :year value from the url
 router.get("/:year", async (req, res) => {
 	try {
