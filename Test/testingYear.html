@@ -1,5 +1,8 @@
 <body>
-	<div></div>
+	<div>
+		<button onclick="mongoGetYears()">FETCH MONGODB</button>
+		<button onclick="couchGetYears()">FETCH COUHBASE</button>
+	</div>
 	<script>
 		// Years array for same tests every time.
 		const years = [
@@ -505,7 +508,7 @@
 			1970,
 		];
 
-		function fetchingYear(uri, theYear) {
+		function fetchingYear(uri, theYear, db) {
 			let end;
 			const div = document.querySelector("div");
 			let start = new Date();
@@ -526,21 +529,45 @@
 					// console.log(end.getTime() - start.getTime() + " ms");
 					const result = end.getTime() - start.getTime() + " ";
 
-					if (localStorage.getItem("years")) {
-						console.log("exists");
-						let allYears = localStorage.getItem("years").split();
+					if (localStorage.getItem(db)) {
+						let allYears = localStorage.getItem(db).split();
 						allYears.push(result);
 						allYears.toString();
-						localStorage.setItem("years", allYears);
+						localStorage.setItem(db, allYears);
 					} else {
-						console.log("nop");
-						localStorage.setItem("years", result);
+						localStorage.setItem(db, result);
 					}
 				});
 		}
 
-		for (const year of years) {
-			fetchingYear("http://192.168.1.32:3000/mongodb/", year);
+		function mongoGetYears() {
+			for (let i = 0; i < years.length; i++) {
+				setTimeout(function() {
+					fetchingYear(
+						"http://192.168.1.32:3000/mongodb/",
+						years[i],
+						"mongodbYear"
+					);
+					if (i === years.length - 1) {
+						console.log("DONE");
+					}
+				}, 500 * i);
+			}
+		}
+
+		function couchGetYears() {
+			for (let i = 0; i < years.length; i++) {
+				setTimeout(function() {
+					fetchingYear(
+						"http://192.168.1.32:3000/couchbase/",
+						years[i],
+						"couchbaseYear"
+					);
+				}, 500 * i);
+				if (i === years.length - 1) {
+					console.log("DONE");
+				}
+			}
 		}
 	</script>
 </body>

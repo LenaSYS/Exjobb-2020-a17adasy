@@ -1,0 +1,68 @@
+<body>
+	<div>
+		<button onclick="mongoGetPop()">FETCH MONGODB</button>
+		<button onclick="couchGetPop()">FETCH COUHBASE</button>
+	</div>
+	<script>
+		// Population array for same test values every time.
+		function fetchingAll(uri, db) {
+			let end;
+			const div = document.querySelector("div");
+			let start = new Date();
+			fetch(`${uri}`, {
+				method: "GET",
+				mode: "cors",
+				cache: "default",
+			})
+				.then((response) => {
+					return response.json();
+				})
+				.then((data) => {
+					const stringified = JSON.stringify(data);
+					div.innerHTML = stringified;
+				})
+				.then(() => {
+					end = new Date();
+					// console.log(end.getTime() - start.getTime() + " ms");
+					const result = end.getTime() - start.getTime() + " ";
+
+					if (localStorage.getItem(db)) {
+						let allYears = localStorage.getItem(db).split();
+						allYears.push(result);
+						allYears.toString();
+						localStorage.setItem(db, allYears);
+					} else {
+						localStorage.setItem(db, result);
+					}
+				});
+		}
+
+		const getAllLoops = 500;
+		function mongoGetPop() {
+			for (let i = 0; i < getAllLoops; i++) {
+				setTimeout(function() {
+					fetchingPopulation(
+						"http://192.168.1.32:3000/mongodb/population/",
+						"mongodbPopulation"
+					);
+				}, 500 * i);
+				if (i === getAllLoops - 1) {
+					console.log("DONE");
+				}
+			}
+		}
+		function couchGetPop() {
+			for (let i = 0; i < getAllLoops; i++) {
+				setTimeout(function() {
+					fetchingPopulation(
+						"http://192.168.1.32:3000/couchbase/population",
+						"couchbasePopulation"
+					);
+				}, 500 * i);
+				if (i === getAllLoops - 1) {
+					console.log("DONE");
+				}
+			}
+		}
+	</script>
+</body>

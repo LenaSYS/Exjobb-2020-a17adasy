@@ -28,7 +28,7 @@ router.get("/random", async (req, res) => {
 			{ $sample: { size: 500 } },
 		]);
 		const years = randomData.map((d) => {
-			return d.Year;
+			return d.Value;
 		});
 		res.send(years);
 	} catch (err) {
