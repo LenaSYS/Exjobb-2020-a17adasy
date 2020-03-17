@@ -511,7 +511,7 @@
 		function fetchingPopulation(uri, number, db) {
 			let end;
 			const div = document.querySelector("div");
-			let start = new Date();
+			let start = performance.now();
 			fetch(`${uri}${number}`, {
 				method: "GET",
 				mode: "cors",
@@ -525,9 +525,8 @@
 					div.innerHTML = stringified;
 				})
 				.then(() => {
-					end = new Date();
-					// console.log(end.getTime() - start.getTime() + " ms");
-					const result = end.getTime() - start.getTime() + " ";
+					end = performance.now();
+					const result = end - start;
 
 					if (localStorage.getItem(db)) {
 						let allYears = localStorage.getItem(db).split();

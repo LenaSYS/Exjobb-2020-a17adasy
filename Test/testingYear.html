@@ -511,7 +511,7 @@
 		function fetchingYear(uri, theYear, db) {
 			let end;
 			const div = document.querySelector("div");
-			let start = new Date();
+			let start = performance.now();
 			fetch(`${uri}${theYear}`, {
 				method: "GET",
 				mode: "cors",
@@ -525,9 +525,9 @@
 					div.innerHTML = stringified;
 				})
 				.then(() => {
-					end = new Date();
+					end = performance.now();
 					// console.log(end.getTime() - start.getTime() + " ms");
-					const result = end.getTime() - start.getTime() + " ";
+					const result = end - start;
 
 					if (localStorage.getItem(db)) {
 						let allYears = localStorage.getItem(db).split();
