@@ -540,11 +540,14 @@
 				});
 		}
 
+		const pc = "http://192.168.1.32:3000/";
+		const laptop = "http://192.168.1.107:3000/"
+
 		function getYears(database) {
 			for (let i = 0; i < years.length; i++) {
 				setTimeout(function() {
 					fetchingYear(
-						`http://192.168.1.32:3000/${database}/`,
+						`${laptop}${database}/`,
 						years[i],
 						`${database}Year`
 					);
