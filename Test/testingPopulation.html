@@ -523,9 +523,9 @@
 				.then((data) => {
 					const stringified = JSON.stringify(data);
 					div.innerHTML = stringified;
+					end = performance.now();
 				})
 				.then(() => {
-					end = performance.now();
 					const result = end - start;
 
 					if (localStorage.getItem(db)) {
@@ -541,7 +541,7 @@
 
 		function getPop(database) {
 			for (let i = 0; i < population.length; i++) {
-				setTimeout(function() {
+				setTimeout(function () {
 					fetchingPopulation(
 						`http://192.168.1.32:3000/${database}/population/`,
 						population[i],
