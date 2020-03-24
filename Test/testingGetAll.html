@@ -1,7 +1,7 @@
 <body>
 	<div>
 		<button onclick="getAll('mongodb')">FETCH MONGODB</button>
-		<button onclick="getAll('couchbase')">FETCH COUHBASE</button>
+		<button onclick="getAll('couchbase')">FETCH COUCHBASE</button>
 	</div>
 	<script>
 		function fetchingAll(uri, db) {
@@ -35,18 +35,21 @@
 				});
 		}
 
+		const pc = "http://192.168.1.32:3000/";
+		const laptop = "http://192.168.0.109:3000/"
 		function getAll(database) {
 			const getAllLoops = 500;
 			for (let i = 0; i < getAllLoops; i++) {
 				setTimeout(function () {
-					fetchingPopulation(
-						`http://192.168.1.32:3000/${database}/population/`,
+					console.log(i);
+					fetchingAll(
+						`${laptop}${database}/`,
 						`${database}Population`
 					);
 					if (i === getAllLoops - 1) {
 						console.log("DONE");
 					}
-				}, 500 * i);
+				}, 1000 * i);
 			}
 		}
 	</script>

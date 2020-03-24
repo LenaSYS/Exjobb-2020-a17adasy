@@ -11,7 +11,10 @@ app.use("/mongodb", require("./routes/mongo"));
 app.use("/couchbase", require("./routes/couchbase"));
 
 const port = 3000;
-const ip = "192.168.1.32";
+// - PC
+// const ip = "192.168.1.32";
+// - LAPTOP
+const ip = "192.168.0.109"
 app.listen(port, ip, () =>
 	console.log(`Example app listening on ${ip}:${port}!`)
 );
