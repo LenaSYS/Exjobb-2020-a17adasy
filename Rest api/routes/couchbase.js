@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 		const result = await cluster.query("SELECT * FROM `population`");
 		res.send(result.rows);
 	} catch (err) {
-		return console.log(err);
+		console.log(err);
 	}
 });
 
