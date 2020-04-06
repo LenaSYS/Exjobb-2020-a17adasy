@@ -38,12 +38,12 @@
 		const pc = "http://192.168.1.32:3000/";
 		const laptop = "http://192.168.0.109:3000/"
 		function getAll(database) {
-			const getAllLoops = 500;
+			const getAllLoops = 2000;
 			for (let i = 0; i < getAllLoops; i++) {
 				setTimeout(function () {
 					console.log(i);
 					fetchingAll(
-						`${laptop}${database}/`,
+						`${pc}${database}/`,
 						`${database}Population`
 					);
 					if (i === getAllLoops - 1) {

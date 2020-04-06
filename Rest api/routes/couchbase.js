@@ -63,7 +63,7 @@ router.post("/mongo-to-couch", async (req, res) => {
 							Value: data.Value,
 							Year: data.Year,
 						},
-						function(err, result) {
+						function (err, result) {
 							if (!err) {
 								console.log(
 									"stored document successfully. CAS is %j",
@@ -78,7 +78,6 @@ router.post("/mongo-to-couch", async (req, res) => {
 						}
 					);
 				});
-				res.send("do it");
 				console.log("done");
 			} catch (err) {
 				console.log(err);
