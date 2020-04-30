@@ -4,51 +4,47 @@
 		<button onclick="getAll('couchbase')">FETCH COUCHBASE</button>
 	</div>
 	<script>
-		function fetchingAll(uri, db) {
-			let end;
+		async function fetchingAll(uri, db) {
 			const div = document.querySelector("div");
-			let start = performance.now();
-			fetch(`${uri}`, {
+			const start = performance.now();
+			let end;
+
+			const response = await fetch(`${uri}`, {
 				method: "GET",
 				mode: "cors",
 				cache: "default",
 			})
-				.then((response) => {
-					return response.json();
-				})
-				.then((data) => {
-					const stringified = JSON.stringify(data);
-					div.innerHTML = stringified;
-					end = performance.now();
-				})
-				.then(() => {
-					const result = end - start;
+			const data = await response.json();
 
-					if (localStorage.getItem(db)) {
-						let allYears = localStorage.getItem(db).split();
-						allYears.push(result);
-						allYears.toString();
-						localStorage.setItem(db, allYears);
-					} else {
-						localStorage.setItem(db, result);
-					}
-				});
+			const stringified = JSON.stringify(data);
+			div.innerHTML = stringified;
+			end = performance.now();
+
+			const result = end - start;
+
+			if (localStorage.getItem(db)) {
+				let allYears = localStorage.getItem(db).split();
+				allYears.push(result);
+				allYears.toString();
+				localStorage.setItem(db, allYears);
+			} else {
+				localStorage.setItem(db, result);
+			}
+
 		}
 
 		const pc = "http://192.168.1.32:3000/";
-		function getAll(database) {
-			const getAllLoops = 2000;
+		async function getAll(database) {
+			const getAllLoops = 10;
 			for (let i = 0; i < getAllLoops; i++) {
-				setTimeout(function () {
-					console.log(i);
-					fetchingAll(
-						`${pc}${database}/`,
-						`${database}Population`
-					);
-					if (i === getAllLoops - 1) {
-						console.log("DONE");
-					}
-				}, 1000 * i);
+				console.log(i);
+				await fetchingAll(
+					`${pc}${database}/`,
+					`${database}Population`
+				);
+				if (i === getAllLoops - 1) {
+					console.log("DONE");
+				}
 			}
 		}
 	</script>
