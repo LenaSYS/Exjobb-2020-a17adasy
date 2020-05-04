@@ -3,7 +3,7 @@ const express = require("express"),
 	mongoose = require("mongoose"),
 	MongoPop = require("../models/MongoPop");
 
-//Connects to the local MongoDB database
+// Connects to the local MongoDB database
 mongoose
 	.connect("mongodb://localhost:27017/Exjobb", {
 		useNewUrlParser: true,
@@ -55,6 +55,32 @@ router.get("/population/:pop", async (req, res) => {
 		const data = await MongoPop.find({
 			Value: { $gte: population },
 		}).sort({ Value: 1 });
+		res.send(data);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+// Shows the first matching document with name
+router.get("/country-code/:code", async (req, res) => {
+	try {
+		const data = await MongoPop.findOne({
+			"Country Code": req.params.code,
+		});
+
+		res.send(data);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+// Show Value field when searching code
+router.get("/country-value/:code", async (req, res) => {
+	try {
+		const data = await MongoPop.find({
+			"Country Code": req.params.code,
+		}, 'Value -_id');
+
 		res.send(data);
 	} catch (err) {
 		console.log(err);

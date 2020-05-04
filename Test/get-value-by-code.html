@@ -1,0 +1,53 @@
+<body>
+    <div>
+        <button onclick="get('mongodb')">FETCH MONGODB</button>
+        <button onclick="get('couchbase')">FETCH COUCHBASE</button>
+    </div>
+    <script>
+        const codes = ["ARB"];
+
+        async function fetching(uri, code, db) {
+            const div = document.querySelector("div");
+            const start = performance.now();
+            let end;
+
+            const response = await fetch(`${uri}${code}`, {
+                method: "GET",
+                mode: "cors",
+                cache: "default",
+            })
+            const data = await response.json();
+
+            const stringified = JSON.stringify(data);
+            div.innerHTML = stringified;
+            end = performance.now();
+
+            const result = end - start;
+
+            if (localStorage.getItem(db)) {
+                let allYears = localStorage.getItem(db).split();
+                allYears.push(result);
+                allYears.toString();
+                localStorage.setItem(db, allYears);
+            } else {
+                localStorage.setItem(db, result);
+            }
+
+        }
+
+        const pc = "http://192.168.1.32:3000/";
+        async function get(database) {
+            for (let i = 0; i < codes.length; i++) {
+                console.log(i);
+                await fetching(
+                    `${pc}${database}/country-value/`,
+                    codes[i],
+                    `${database}Code`
+                );
+                if (i === codes.length - 1) {
+                    console.log("DONE");
+                }
+            }
+        }
+    </script>
+</body>

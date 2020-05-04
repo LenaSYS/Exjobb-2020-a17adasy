@@ -46,6 +46,30 @@ router.get("/population/:pop", async (req, res) => {
 	}
 });
 
+// Shows the first matching document with code
+router.get("/country-code/:code", async (req, res) => {
+	try {
+		const data = await cluster.query(
+			`SELECT * FROM \`population\` WHERE \`Country Code\` = "${req.params.code}" LIMIT 1`
+		);
+		res.send(data.rows);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+// Show Value field when searching code
+router.get("/country-value/:code", async (req, res) => {
+	try {
+		const data = await cluster.query(
+			`SELECT \`Value\` FROM \`population\` WHERE \`Country Code\` = "${req.params.code}"`
+		);
+		res.send(data.rows);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
 // Only for filling couchbase with the dataset
 const MongoPop = require("../models/MongoPop");
 router.post("/mongo-to-couch", async (req, res) => {
