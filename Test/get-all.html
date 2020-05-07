@@ -35,7 +35,7 @@
 
 		const pc = "http://192.168.1.32:3000/";
 		async function getAll(database) {
-			const getAllLoops = 10;
+			const getAllLoops = 2500;
 			for (let i = 0; i < getAllLoops; i++) {
 				console.log(i);
 				await fetchingAll(

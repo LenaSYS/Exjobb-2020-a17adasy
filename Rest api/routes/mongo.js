@@ -26,10 +26,10 @@ router.get("/", async (req, res) => {
 router.get("/random", async (req, res) => {
 	try {
 		const randomData = await MongoPop.aggregate([
-			{ $sample: { size: 2000 } },
+			{ $sample: { size: 2500 } },
 		]);
 		const data = randomData.map((d) => {
-			return d.Year;
+			return d["Country Code"];
 		});
 		res.send(data);
 	} catch (err) {
