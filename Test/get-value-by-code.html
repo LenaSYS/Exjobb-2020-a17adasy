@@ -37,7 +37,7 @@
 
         const pc = "http://192.168.1.32:3000/";
         async function get(database) {
-            for (let i = 0; i < codes.length; i++) {
+            for (let i = 0; i < 6000; i++) {
                 console.log(i);
                 await fetching(
                     `${pc}${database}/country-value/`,
